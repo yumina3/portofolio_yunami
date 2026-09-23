@@ -1,0 +1,505 @@
+@import url('https://fonts.googleapis.com/css2?family=Sacramento&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Properti kustom untuk animasi glow kemudi timeline.
+   @property membuat nilainya bisa diinterpolasi GSAP sebagai angka. */
+@property --steer-glow {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 0.85;
+}
+
+@property --steer-scale {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 1;
+}
+
+:root {
+  --ocean: #0B3C5D;
+  --turquoise: #2EC4B6;
+  --shallow: #A8E6E2;
+  --sky: #BFE6F5;
+  --sand: #F6E7C8;
+  --foam: #FFFDF7;
+  --coral: #FF7F5C;
+  --sun: #FFC857;
+  --dawn-a: #FFD9B8;
+  --dawn-b: #FFB4A2;
+  --night: #071E33;
+
+  /* dianimasikan oleh ScrollTrigger (lihat DESAIN.md bagian 8.3) */
+  --sky-top: #FFD9B8;
+  --sky-bottom: #FFB4A2;
+
+  /* Ilustrasi pantai hero (HANYA dipakai oleh HeroBeachScene) */
+  --sand-1: #F6E7C8;
+  --sand-2: #F0D5A8;
+  --sand-3: #E8C08A;
+  --sand-wet: #D9A874;
+  --water-a: #0B3C5D;;
+  --water-b: #5FBDB8;
+  --caustic: #D6F3F0;
+
+  --radius-card: 24px;
+  --radius-frame: 28px;
+  --radius-input: 12px;
+  --radius-note: 6px;
+
+  --shadow-sm: 0 2px 8px rgba(11, 60, 93, 0.10);
+  --shadow-md: 0 12px 32px rgba(11, 60, 93, 0.14);
+  --shadow-lg: 0 24px 64px rgba(11, 60, 93, 0.18);
+
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  color: var(--ocean);
+  background: linear-gradient(to bottom, var(--sky-top), var(--sky-bottom));
+  background-attachment: fixed;
+  font-family: '"Plus Jakarta Sans"', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* Fokus keyboard selalu terlihat */
+:focus-visible {
+  outline: 3px solid var(--ocean);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Utilitas efek kaca */
+.glass {
+  background: rgba(255, 253, 247, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 253, 247, 0.6);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass {
+    background: var(--foam);
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * Chip skill kaca (glassmorphism) di hero.
+ * Tint per chip via --tint (turquoise | coral | sun | shallow | sky).
+ * Semua ukuran/animasi tween di wrapper; di sini hanya tampilan statis.
+ * ------------------------------------------------------------------ */
+.skill-chip {
+  --tint: var(--turquoise);
+  --glass-alpha: 0.60;
+  --glass-alpha-2: 0.28;
+  --tint-strength: 0.30;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  padding: 10px 18px;
+  border-radius: 9999px;
+  color: var(--ocean);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+
+  background: linear-gradient(
+    135deg,
+    rgba(255, 253, 247, var(--glass-alpha)),
+    rgba(255, 253, 247, var(--glass-alpha-2))
+  );
+  backdrop-filter: blur(14px) saturate(1.5);
+  -webkit-backdrop-filter: blur(14px) saturate(1.5);
+  border: 1px solid rgba(255, 253, 247, 0.7);
+  box-shadow:
+    0 10px 28px rgba(11, 60, 93, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -8px 16px rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Lapisan tint tipis di atas kaca */
+.skill-chip::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--tint), transparent 70%);
+  opacity: var(--tint-strength);
+}
+
+@supports (background: color-mix(in srgb, red 50%, blue)) {
+  .skill-chip::after {
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--tint) 80%, transparent),
+      transparent 70%
+    );
+  }
+}
+
+/* Highlight kaca diagonal kiri-atas */
+.skill-chip::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  left: -10%;
+  width: 60%;
+  height: 180%;
+  z-index: 1;
+  transform: rotate(20deg);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.5),
+    rgba(255, 255, 255, 0)
+  );
+  pointer-events: none;
+}
+
+/* Ikon di dalam lingkaran berwarna tint */
+.skill-chip__icon {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 9999px;
+  background: var(--tint);
+  color: var(--foam);
+  opacity: 0.55;
+  flex: none;
+}
+
+.skill-chip__label {
+  position: relative;
+  z-index: 2;
+}
+
+/* Kilau melintas (elemen terpisah, digerakkan GSAP translateX) */
+.skill-chip__sheen {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40%;
+  z-index: 3;
+  transform: translateX(-120%);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.55),
+    rgba(255, 255, 255, 0)
+  );
+  pointer-events: none;
+}
+
+/* Fallback tanpa backdrop-filter: latar lebih pekat */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .skill-chip {
+    background: rgba(255, 253, 247, 0.85);
+  }
+}
+
+/* Varian mobile lebih kecil */
+.skill-chip--sm {
+  height: 36px;
+  padding: 6px 14px;
+  font-size: 13px;
+  gap: 8px;
+  backdrop-filter: blur(10px) saturate(1.4);
+  -webkit-backdrop-filter: blur(10px) saturate(1.4);
+}
+.skill-chip--sm .skill-chip__icon {
+  width: 22px;
+  height: 22px;
+}
+.skill-chip--sm .skill-chip__icon svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* Low quality: blur dikurangi */
+.skill-chip--low {
+  backdrop-filter: blur(8px) saturate(1.3);
+  -webkit-backdrop-filter: blur(8px) saturate(1.3);
+}
+
+/* Wrapper animasi: transform saja */
+.chip-float {
+  will-change: transform;
+}
+
+/* Hover: naik sedikit + tint lebih kuat (transisi transform saja) */
+@media (hover: hover) and (pointer: fine) {
+  .skill-chip {
+    transition: transform 0.3s var(--ease-soft), box-shadow 0.3s var(--ease-soft);
+  }
+  .skill-chip:hover {
+    transform: scale(1.08) translateY(-2px);
+    --tint-strength: 0.45;
+    box-shadow:
+      0 16px 36px rgba(11, 60, 93, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      inset 0 -8px 16px rgba(255, 255, 255, 0.14);
+  }
+}
+
+/* Riak air di bawah chip area water (digerakkan GSAP) */
+.chip-ripple {
+  position: absolute;
+  left: 50%;
+  bottom: -6px;
+  width: 70%;
+  height: 14px;
+  margin-left: -35%;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 253, 247, 0.9);
+  pointer-events: none;
+  opacity: 0;
+}
+
+/* Utilitas teks kontras di section malam */
+.on-night {
+  color: var(--foam);
+}
+
+.on-night :focus-visible {
+  outline-color: var(--foam);
+}
+
+/* ------------------------------------------------------------------ *
+ * Judul section: SELALU putih + halo gelap (glow) supaya terbaca di
+ * latar apa pun (act terang maupun malam). Karena latar `body` berganti
+ * mengikuti scroll (--sky-top/--sky-bottom), teks tidak boleh bergantung
+ * pada warna latar.
+ * ------------------------------------------------------------------ */
+.section-title {
+  color: var(--foam);
+  text-shadow:
+    0 1px 1px rgba(7, 30, 51, 0.55),
+    0 2px 6px rgba(7, 30, 51, 0.55),
+    0 4px 20px rgba(7, 30, 51, 0.55),
+    0 1px 30px rgba(7, 30, 51, 0.45);
+}
+
+/* Teks heading lain (mis. "Hi, I am yunami...") juga putih + glow gelap. */
+.heading-highlight {
+  color: var(--foam);
+  text-shadow:
+    0 1px 1px rgba(7, 30, 51, 0.55),
+    0 2px 6px rgba(7, 30, 51, 0.5),
+    0 4px 18px rgba(7, 30, 51, 0.5);
+}
+
+/* Teks sapaan Hero ("Hello", "I am yunami"): diberi cahaya terang (halo
+ * putih/cream) agar menonjol & mudah ditangkap mata, plus halo gelap tipis
+ * supaya tetap terbaca saat latar act berganti. */
+.hero-glow {
+  text-shadow:
+    0 0 4px rgba(255, 253, 247, 0.9),
+    0 0 10px rgba(255, 253, 247, 0.75),
+    0 0 22px rgba(255, 253, 247, 0.55),
+    0 0 40px rgba(255, 236, 200, 0.4),
+    0 2px 6px rgba(7, 30, 51, 0.35);
+}
+
+/* Sub-heading (paragraf di bawah judul): putih + halo gelap tipis.
+ * Halo tipis WAJIB ada karena latar act "About" nyaris putih (#FFFDF7);
+ * tanpa halo, teks putih akan hilang. Halonya jauh lebih halus dari judul. */
+.text-body {
+  color: var(--foam);
+  text-shadow:
+    0 1px 2px rgba(7, 30, 51, 0.45),
+    0 1px 10px rgba(7, 30, 51, 0.3);
+}
+
+.text-body-on-dark {
+  color: var(--foam);
+  text-shadow:
+    0 1px 2px rgba(7, 30, 51, 0.5),
+    0 1px 12px rgba(7, 30, 51, 0.4);
+}
+
+/* Sembunyikan scrollbar horizontal accidental */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Satu berkas sinar lampu menyapu 360 derajat mengitari puncak mercusuar */
+@keyframes lh-sweep {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes lh-ring {
+  0% {
+    transform: translateX(-50%) scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateX(-50%) scale(2.4);
+    opacity: 0;
+  }
+}
+
+/* Kemudi kapal: rotasi kontinu + glow emas */
+@keyframes steer-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-steer-spin {
+  animation: steer-spin 12s linear infinite;
+  transform-origin: center;
+  will-change: transform;
+}
+
+/* ------------------------------------------------------------------ *
+ * Dekorasi bawah laut di section Projects: anemon, gelembung, mutiara.
+ * Hanya transform/opacity yang dianimasikan (murah untuk paint).
+ * ------------------------------------------------------------------ */
+
+/* Anemon: bergoyang pelan seperti arus (sway kiri-kanan + sedikit memanjang) */
+@keyframes anemone-sway {
+  0% {
+    transform: rotate(-4deg) scaleY(1) translateY(0);
+  }
+  50% {
+    transform: rotate(4deg) scaleY(1.05) translateY(-3px);
+  }
+  100% {
+    transform: rotate(-4deg) scaleY(1) translateY(0);
+  }
+}
+
+.anemone-sway {
+  transform-origin: bottom center;
+  animation: anemone-sway 7s var(--ease-soft) infinite;
+  will-change: transform;
+}
+
+/* Anemon sekunder: goyangan lebih cepat & berlawanan arah */
+.anemone-sway--alt {
+  animation-duration: 5.5s;
+  animation-direction: reverse;
+}
+
+/* Gelembung naik dari bawah ke atas sambil bergoyang & memudar */
+@keyframes bubble-rise {
+  0% {
+    transform: translateY(0) translateX(0) scale(0.6);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateY(-45%) translateX(10px) scale(1);
+    opacity: 0.5;
+  }
+  88% {
+    opacity: 0.35;
+  }
+  100% {
+    transform: translateY(-95%) translateX(-8px) scale(1.05);
+    opacity: 0;
+  }
+}
+
+.bubble-rise {
+  animation: bubble-rise var(--dur, 9s) linear infinite;
+  animation-delay: var(--delay, 0s);
+  will-change: transform, opacity;
+}
+
+/* Mutiara: denyut cahaya lembut (berkilau) */
+@keyframes pearl-glow {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+.pearl-glow {
+  animation: pearl-glow 4.5s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Kuda laut: mengapung naik-turun sambil sedikit bergoyang */
+@keyframes seahorse-drift {
+  0% {
+    transform: translateY(0) rotate(-3deg);
+  }
+  50% {
+    transform: translateY(-16px) rotate(3deg);
+  }
+  100% {
+    transform: translateY(0) rotate(-3deg);
+  }
+}
+
+.seahorse-drift {
+  animation: seahorse-drift 6.5s var(--ease-soft) infinite;
+  will-change: transform;
+}
+
+/* Ubur-ubur: memompa naik-turun (badan sedikit memanjang/mengempis) */
+@keyframes jelly-pulse {
+  0%,
+  100% {
+    transform: translateY(0) scaleY(1) scaleX(1);
+  }
+  45% {
+    transform: translateY(-14px) scaleY(1.08) scaleX(0.96);
+  }
+  60% {
+    transform: translateY(-10px) scaleY(0.94) scaleX(1.04);
+  }
+}
+
+.jelly-pulse {
+  animation: jelly-pulse 5s ease-in-out infinite;
+  transform-origin: top center;
+  will-change: transform;
+}
+
+/* Hormati preferensi reduce-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

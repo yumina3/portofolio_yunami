@@ -1,0 +1,51 @@
+// Ikon brand yang tidak tersedia di lucide-react (Python, Excel).
+// Dibuat sebagai komponen SVG agar bisa dipakai lewat peta ikon yang sama.
+// Semua menerima `size`, `className`, dll. seperti ikon lucide.
+
+export function Python({ size = 16, ...props }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      {...props}
+    >
+      <path
+        fill="currentColor"
+        d="M11.9 1.5c-1.2 0-2.35.1-3.36.3-1.68.33-2 1.02-2 2.3v1.7h5.5v.86H5.2c-1.3 0-2.44.78-2.8 2.27-.42 1.7-.44 2.77 0 4.55.32 1.32 1.09 2.27 2.39 2.27h1.55v-2.02c0-1.48 1.28-2.78 2.8-2.78h5.44c1.24 0 2.24-1.02 2.24-2.27V4.1c0-1.21-1.02-2.12-2.24-2.32A22.6 22.6 0 0 0 11.9 1.5Zm-2.95 1.37a.86.86 0 1 1 0 1.73.86.86 0 0 1 0-1.73Z"
+      />
+      <path
+        fill="currentColor"
+        d="M12.1 22.5c1.2 0 2.35-.1 3.36-.3 1.68-.33 2-1.02 2-2.3v-1.7h-5.5v-.86h6.84c1.3 0 2.44-.78 2.8-2.27.42-1.7.44-2.77 0-4.55-.32-1.32-1.09-2.27-2.39-2.27h-1.55v2.02c0 1.48-1.28 2.78-2.8 2.78H9.42c-1.24 0-2.24 1.02-2.24 2.27v3.06c0 1.21 1.02 2.12 2.24 2.32.98.17 2.01.27 2.68.28Zm2.95-1.37a.86.86 0 1 1 0-1.73.86.86 0 0 1 0 1.73Z"
+      />
+    </svg>
+  )
+}
+
+export function Excel({ size = 16, ...props }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      {...props}
+    >
+      <path
+        fill="currentColor"
+        d="M14.5 3h4.75C20.77 3 22 4.23 22 5.75v12.5C22 19.77 20.77 21 19.25 21H14.5V3Z"
+      />
+      <path
+        fill="currentColor"
+        d="M9.5 3H4.75C3.23 3 2 4.23 2 5.75v12.5C2 19.77 3.23 21 4.75 21H9.5V3Z"
+      />
+      <path
+        fill="#fff"
+        d="m5.15 8.2 1.6 0 1.02 1.76c.1.18.19.38.27.6h.02c.05-.13.15-.34.29-.62L9.44 8.2h1.72l-2.07 3.29 2.15 3.51H9.5l-1.15-2c-.08-.14-.16-.3-.22-.49h-.02c-.03.09-.11.25-.24.48l-1.18 2.01H4.94l2.2-3.5L5.15 8.2Z"
+      />
+    </svg>
+  )
+}
