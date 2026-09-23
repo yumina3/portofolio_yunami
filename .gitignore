@@ -20,6 +20,9 @@ dist-ssr
 # Screenshot pratinjau lokal
 .preview/
 
+# Konfigurasi tool AI (opencode) — tetap di lokal, jangan ikut di-push
+.opencode/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
