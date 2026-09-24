@@ -28,4 +28,17 @@ export const experiences = [
     ],
     techStack: ['Python', 'Pandas', 'Google Colab'],
   },
+  {
+    id: 'exp-3',
+    role: 'I-Secret Research Member & GLW PKM 2025 Project Lead',
+    organization: 'I-Secret Ilmu Komputer Unnes',
+    startDate: '2025',
+    endDate: null,
+    description: [
+      'Led the overall planning, content development, and coordination of the GLW (Grand Launching Workshop) PKM 2025, while spearheading the integration of the theme "INNOVACTION: Bridging Innovation and Critical Thinking of Meaningful Change Through PKM" into all workshop modules.',
+      'Managed cross-functional committees and facilitated interactive workshop sessions to help participants draft impactful PKM proposals.',
+      'Nominated as "Best Member" for the entire operational period, reflecting exceptional dedication and consistent high performance.',
+    ],
+    techStack: ['I-Secret', 'PKM', 'Innovation', 'Project Leadership'],
+  },
 ]

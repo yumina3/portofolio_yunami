@@ -233,7 +233,7 @@ export function Skills() {
                         CHIP_BG[badge.tint] || CHIP_BG.shallow
                       }`}
                     >
-                      <DataIcon name={badge.icon} size={16} />
+                      <DataIcon name={badge.icon} label={badge.name} size={16} />
                       {badge.name}
                     </span>
                   ))}
@@ -251,9 +251,12 @@ export function Skills() {
               <ul className="mt-4 space-y-3">
                 {group.items.map((item) => (
                   <li key={item.name} className="flex items-center gap-3 text-[15px] text-ocean/85">
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-shallow text-ocean">
-                      <DataIcon name={item.icon} size={16} />
-                    </span>
+                    <DataIcon
+                      name={item.icon}
+                      label={item.name}
+                      size={22}
+                      className="shrink-0 text-ocean"
+                    />
                     {item.name}
                   </li>
                 ))}

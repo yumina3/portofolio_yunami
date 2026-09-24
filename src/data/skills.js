@@ -33,7 +33,7 @@ export const skills = [
   {
     category: 'Tools & Design',
     items: [
-      { name: 'Git', icon: 'GitBranch' },
+      { name: 'GitHub', icon: 'Github' },
       { name: 'Figma', icon: 'PenTool' },
       { name: 'Excel', icon: 'Excel' },
       { name: 'Notion', icon: 'NotebookPen' },
@@ -51,7 +51,7 @@ export const techBadges = [
   { name: 'React', icon: 'Atom', tint: 'turquoise', zone: 'sand', depth: 1.0, pos: { left: 6, top: 16 } },
   { name: 'JavaScript', icon: 'Braces', tint: 'sun', zone: 'sand', depth: 1.25, pos: { left: 13, top: 40 } },
   { name: 'Tailwind', icon: 'Paintbrush', tint: 'sky', zone: 'sand', depth: 0.75, pos: { left: 5, top: 64 } },
-  { name: 'Git', icon: 'GitBranch', tint: 'coral', zone: 'sand', depth: 1.1, pos: { left: 20, top: 8 } },
+  { name: 'GitHub', icon: 'Github', tint: 'coral', zone: 'sand', depth: 1.1, pos: { left: 20, top: 8 } },
   { name: 'Node.js', icon: 'Server', tint: 'shallow', zone: 'water', depth: 0.9, pos: { left: 79, top: 14 } },
   { name: 'Python', icon: 'Python', tint: 'coral', zone: 'water', depth: 1.35, pos: { left: 88, top: 38 } },
   { name: 'Excel', icon: 'Excel', tint: 'turquoise', zone: 'water', depth: 1.2, pos: { left: 66, top: 20 } },

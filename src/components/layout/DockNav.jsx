@@ -21,31 +21,34 @@ export function DockNav() {
   return (
     <nav
       aria-label="Main"
-      className="fixed inset-x-0 bottom-4 z-50 flex justify-center px-4"
+      className="fixed inset-x-0 bottom-4 z-50 flex justify-center px-3"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
-      <ul className="glass flex h-14 items-center gap-1 rounded-full px-2 shadow-[var(--shadow-lg)]">
+      {/* Di layar kecil: item lebih rapat + bisa di-scroll horizontal bila
+          masih kurang, jadi tidak pernah melebar keluar layar.
+          Di layar besar (lg): kembali ke tampilan semula (label muncul). */}
+      <ul className="no-scrollbar glass flex h-14 max-w-full items-center gap-0.5 overflow-x-auto rounded-full px-1.5 shadow-[var(--shadow-lg)] sm:gap-1 sm:px-2">
         {NAV_ITEMS.map((item) => {
           const isActive = activeId === item.id
           return (
-            <li key={item.id}>
+            <li key={item.id} className="shrink-0">
               <button
                 type="button"
                 onClick={() => go(item.id)}
                 aria-label={item.label}
                 aria-current={isActive ? 'true' : undefined}
-                className={`flex h-11 min-w-11 items-center justify-center gap-2 rounded-full px-3 text-[13px] font-medium text-ocean transition-colors duration-200 hover:bg-foam/60 ${
+                className={`flex h-11 items-center justify-center gap-1.5 rounded-full px-2 text-[13px] font-medium text-ocean transition-colors duration-200 hover:bg-foam/60 sm:px-2.5 lg:gap-2 lg:px-3 ${
                   isActive ? 'bg-turquoise text-ocean' : 'text-ocean/80'
                 }`}
               >
-                <DataIcon name={item.icon} size={20} />
+                <DataIcon name={item.icon} size={18} forceIcon className="shrink-0 lg:h-5 lg:w-5" />
                 <span className={isActive ? 'inline' : 'hidden lg:inline'}>{item.label}</span>
               </button>
             </li>
           )
         })}
-        <li aria-hidden="true" className="mx-1 h-6 w-px bg-ocean/15" />
-        <li>
+        <li aria-hidden="true" className="mx-0.5 h-6 w-px shrink-0 bg-ocean/15 sm:mx-1" />
+        <li className="shrink-0">
           <QualityControl />
         </li>
       </ul>

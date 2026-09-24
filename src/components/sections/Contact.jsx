@@ -26,7 +26,6 @@ const socialIcons = {
   ),
 }
 import { SectionTitle } from '../ui/SectionTitle'
-import { Button } from '../ui/Button'
 import { Lighthouse } from '../effects/Lighthouse'
 import { profile } from '../../data/profile'
 import { useQuality } from '../../hooks/useQuality'
@@ -49,12 +48,6 @@ export function Contact() {
           I am looking for an internship where I can learn from a real team and ship things
           people use. If that sounds like your team, say hello.
         </p>
-
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-          <Button as="a" variant="night" href={`mailto:${profile.email}`}>
-            <Mail size={18} aria-hidden="true" /> Email me
-          </Button>
-        </div>
 
         {/* Footer */}
         <footer className="mt-20 border-t border-foam/15 pt-8">

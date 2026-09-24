@@ -8,12 +8,10 @@ import { Projects } from '../components/sections/Projects'
 import { Wall } from '../components/sections/Wall'
 import { Contact } from '../components/sections/Contact'
 import { SkyBackground } from '../components/effects/SkyBackground'
-import { WaveTransition } from '../components/effects/WaveTransition'
 import { useLenis } from '../hooks/useLenis'
 import { scrollToSection } from '../utils/scrollToSection'
 
 // Home: tujuh section dalam satu halaman (PRD bagian 5).
-// Zona transisi ombak dipasang di antara pergantian act (DESAIN.md 8.3).
 export function Home() {
   const lenis = useLenis()
   const location = useLocation()
@@ -32,16 +30,11 @@ export function Home() {
       <SkyBackground />
       <main className="pb-28">
         <Hero />
-        <WaveTransition nextFill="var(--sky)" />
         <About />
         <Skills />
         <Experience />
-        <WaveTransition nextFill="var(--shallow)" />
         <Projects />
-        {/* Transisi Projects -> Wall: blend dari navy gelap ke biru laut (bukan kuning). */}
-        <WaveTransition prevFill="#071E33" nextFill="#2C7FA6" />
         <Wall />
-        <WaveTransition nextFill="var(--ocean)" />
         <Contact />
       </main>
     </>

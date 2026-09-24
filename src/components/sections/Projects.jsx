@@ -40,13 +40,21 @@ function SeaCreature({ src, animation, className = '', style, flip = false }) {
 function ReefDecor() {
   return (
     <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-      {/* Gradasi radial: terang di tengah, makin ke tepi makin gelap (#071E33 / Night).
-          Dibatasi ~78% tinggi supaya area transisi bawah bisa di-blend terpisah. */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_75%_60%_at_50%_45%,#3E8FB0_0%,#1E5A7E_45%,#071E33_100%)]" />
+      {/* Gradasi vertikal "laut dalam". Bagian ATAS sengaja TRANSPARAN penuh
+          supaya warna body (yang sedang aktif) terlihat murni di perbatasan
+          Experience -> Projects, jadi tidak ada garis pemisah. Baru setelah
+          itu memudar perlahan ke laut dalam (#071E33). */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            'linear-gradient(to bottom, rgba(168,230,226,0) 0%, rgba(44,127,166,0.35) 22%, rgba(22,75,110,0.85) 55%, #071E33 82%, #071E33 100%)',
+        }}
+      />
 
-      {/* Tail blend di dasar section: melebur dari navy ke biru laut, menyatu
-          dengan ombak WaveTransition berikutnya (tidak ada hard cut). */}
-      <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent via-[#0B3C5D]/55 to-[#2C7FA6]" />
+      {/* Tail blend di dasar section: melebur dari navy ke biru laut dalam,
+          menyatu dengan section Wall berikutnya (tidak ada hard cut). */}
+      <div className="absolute inset-x-0 bottom-0 h-72 bg-gradient-to-b from-transparent via-[#2C7FA6]/55 to-[#2C7FA6]" />
 
       {/* Sinar lembut dari atas */}
       <div className="absolute -top-24 left-1/2 h-72 w-[36rem] -translate-x-1/2 rounded-full bg-[#BFE6F5]/15 blur-3xl" />
@@ -216,9 +224,9 @@ export function Projects() {
 
                     {/* Konten teks */}
                     <div className="relative flex flex-col justify-center p-6 md:p-8 lg:p-9">
-                      {/* Badge kategori (kuning) + tahun */}
+                      {/* Badge kategori (teks kuning tanpa frame) + tahun */}
                       <div className="flex flex-wrap items-center gap-3">
-                        <span className="inline-flex items-center rounded-full border border-sun/70 bg-sun/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-sun">
+                        <span className="font-poppins text-[13px] font-semibold uppercase tracking-[0.14em] text-sun">
                           {project.category}
                         </span>
                         <span className="text-[13px] font-medium text-[#9fc9d6]">{project.year}</span>

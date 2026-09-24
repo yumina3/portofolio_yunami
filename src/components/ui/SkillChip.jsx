@@ -41,7 +41,7 @@ export function SkillChip({
       {sheen && <span className="skill-chip__sheen" data-sheen aria-hidden="true" />}
       {icon && (
         <span className="skill-chip__icon" aria-hidden="true">
-          <DataIcon name={icon} size={16} />
+          <DataIcon name={icon} label={name} size={size === 'sm' ? 18 : 22} />
         </span>
       )}
       <span className="skill-chip__label">{name}</span>

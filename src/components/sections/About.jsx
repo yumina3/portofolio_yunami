@@ -43,7 +43,7 @@ export function About() {
           </p>
           <h2
             data-reveal
-            className="heading-highlight text-[32px] font-bold leading-[1.15] md:text-[44px]"
+            className="heading-highlight font-poppins text-[32px] font-bold leading-[1.15] md:text-[44px]"
           >
             Hi, I am {profile.name}. I build data-driven systems that solve real business problems.
           </h2>

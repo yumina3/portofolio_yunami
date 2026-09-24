@@ -24,7 +24,7 @@ import {
   User,
   Zap,
 } from 'lucide-react'
-import { Excel, Python } from './BrandIcons'
+import { Excel, Python, Github } from './BrandIcons'
 
 export const ICONS = {
   Atom,
@@ -34,6 +34,7 @@ export const ICONS = {
   Database,
   Excel,
   GitBranch,
+  Github,
   Home,
   LayoutGrid,
   Mail,

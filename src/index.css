@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Sacramento&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sacramento&family=Poppins:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -169,20 +169,24 @@ body {
   pointer-events: none;
 }
 
-/* Ikon di dalam lingkaran berwarna tint */
+/* Ikon di dalam chip: tanpa frame/lingkaran, logo langsung tampil.
+   Ukuran sedikit lebih besar supaya logo jelas, tapi tidak berlebihan. */
 .skill-chip__icon {
   position: relative;
   z-index: 2;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 9999px;
-  background: var(--tint);
-  color: var(--foam);
-  opacity: 0.55;
+  width: 22px;
+  height: 22px;
   flex: none;
+}
+
+.skill-chip__icon img,
+.skill-chip__icon svg {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
 }
 
 .skill-chip__label {
@@ -224,12 +228,13 @@ body {
   -webkit-backdrop-filter: blur(10px) saturate(1.4);
 }
 .skill-chip--sm .skill-chip__icon {
-  width: 22px;
-  height: 22px;
+  width: 18px;
+  height: 18px;
 }
+.skill-chip--sm .skill-chip__icon img,
 .skill-chip--sm .skill-chip__icon svg {
-  width: 15px;
-  height: 15px;
+  width: 18px;
+  height: 18px;
 }
 
 /* Low quality: blur dikurangi */

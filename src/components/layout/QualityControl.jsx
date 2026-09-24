@@ -38,9 +38,9 @@ export function QualityControl() {
         aria-haspopup="menu"
         aria-expanded={open}
         aria-label={`Animation quality: ${quality}. Change setting`}
-        className="flex h-11 items-center gap-2 rounded-full px-3 text-[13px] font-medium text-ocean transition-colors duration-200 hover:bg-foam/60"
+        className="flex h-11 items-center gap-2 rounded-full px-2 text-[13px] font-medium text-ocean transition-colors duration-200 hover:bg-foam/60 sm:px-2.5 lg:px-3"
       >
-        <Gauge size={20} aria-hidden="true" />
+        <Gauge size={18} aria-hidden="true" className="shrink-0 lg:h-5 lg:w-5" />
         <span className="hidden lg:inline">Quality</span>
       </button>
 

@@ -17,6 +17,7 @@ export default {
       fontFamily: {
         script: ['Sacramento', 'Dancing Script', 'cursive'],
         sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+        poppins: ['Poppins', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       borderRadius: { card: '24px', frame: '28px' },
       boxShadow: {

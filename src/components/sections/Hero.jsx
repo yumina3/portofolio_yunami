@@ -1,19 +1,15 @@
 import { useRef, useState, useCallback } from 'react'
 import { useGSAP } from '@gsap/react'
 import { gsap } from 'gsap'
-import { ArrowDown } from 'lucide-react'
 import { SkillChip } from '../ui/SkillChip'
 import { HeroBeachScene } from '../effects/HeroBeachScene'
 import { profile } from '../../data/profile'
 import { techBadges } from '../../data/skills'
 import { useQuality } from '../../hooks/useQuality'
-import { useLenis } from '../../hooks/useLenis'
-import { scrollToSection } from '../../utils/scrollToSection'
 import { CHIP_LOOK, CHIP_MOTION } from './chipConfig'
 
 export function Hero() {
   const { quality } = useQuality()
-  const lenis = useLenis()
   const scope = useRef(null)
   const [sceneReady, setSceneReady] = useState(false)
 
@@ -37,8 +33,6 @@ export function Hero() {
       const reveals = root.querySelectorAll('[data-reveal]')
       const floatChips = root.querySelectorAll('[data-float-chip]')
       const parallaxChips = root.querySelectorAll('[data-parallax-chip]')
-      const scrollPill = root.querySelector('[data-scroll-pill]')
-      const scrollArrow = root.querySelector('[data-scroll-arrow]')
 
       const cleanups = []
 
@@ -49,15 +43,6 @@ export function Hero() {
         { y: 24, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.7, stagger: 0.08 }
       )
-
-      if (scrollPill) {
-        tl.fromTo(scrollPill, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5 }, '-=0.3')
-      }
-
-      // Panah naik-turun pelan
-      if (scrollArrow) {
-        gsap.to(scrollArrow, { y: -4, duration: 0.9, ease: 'sine.inOut', yoyo: true, repeat: -1 })
-      }
 
       // 1. Mengapung + drift melengkung (semua Quality kecuali Off)
       floatChips.forEach((chip, i) => {
@@ -185,10 +170,6 @@ export function Hero() {
     { scope, dependencies: [quality, sceneReady] }
   )
 
-  const goToAbout = () => {
-    scrollToSection(document.getElementById('about'), lenis)
-  }
-
   return (
     <section
       id="hero"
@@ -240,8 +221,7 @@ export function Hero() {
       </div>
 
       {/* Konten tengah: cartoon sebagai pusat, teks mengelilinginya.
-          Tanpa GlassCard frame — mengapung langsung di atas scene pantai. */}
-      <div className="relative z-10 flex w-full max-w-3xl flex-col items-center">
+          Tanpa GlassCard frame — mengapung langsung di atas scene pantai. */}      <div className="relative z-10 flex w-full max-w-3xl flex-col items-center">
         {/* Baris atas: "Hello" (kiri kepala) + cartoon + "I am yunami" (kanan badan) */}
         <div className="relative flex items-stretch justify-center">
           <span
@@ -290,20 +270,6 @@ export function Hero() {
           ))}
         </div>
       </div>
-
-      {/* Indikator Scroll: pill kaca kecil di atas dock */}
-      <button
-        type="button"
-        data-scroll-pill
-        onClick={goToAbout}
-        className="glass absolute bottom-24 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2 rounded-full px-4 py-2 text-[14px] font-medium text-ocean shadow-[var(--shadow-sm)]"
-        style={{ opacity: animationsOn ? 0 : 1 }}
-      >
-        Scroll
-        <span data-scroll-arrow aria-hidden="true" className="inline-flex">
-          <ArrowDown size={16} />
-        </span>
-      </button>
     </section>
   )
 }
